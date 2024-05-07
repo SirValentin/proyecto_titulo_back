@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-1c#_+pof=e3w3t3o)k57*i)3$7c$+84)j32j(=86vmp4h9^9c+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["proyectotituloback-production.up.railway.app"]
 
 USER_CREATE_PASSWORD_RETYPE = False
 
@@ -92,12 +92,12 @@ WSGI_APPLICATION = "proyecto_titulo_back.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": config("DB_NAME", default="planificador"),
-        "USER": config("DB_USER", default=""),
-        "PASSWORD": config("DB_PASS", default=""),
-        "HOST": config("DB_HOST", default="localhost"),
-        "PORT": config("DB_PORT", default=""),
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "railway",
+        "USER": "postgres",
+        "PASSWORD": "yDYjenrehpGgwoFeISHRUZjUGlQjxHcd",
+        "HOST": "roundhouse.proxy.rlwy.net",
+        "PORT": "42571",
     }
 }
 
