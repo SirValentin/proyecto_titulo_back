@@ -146,7 +146,7 @@ class Empresa(Model):
 
 class Contrato(Model):
     empresa = ForeignKey(Empresa, on_delete=CASCADE)
-    name = CharField(verbose_name="Nombre de contrato", max_length=80)
+    nombre = CharField(verbose_name="Nombre de contrato", max_length=80)
     tipo = ForeignKey(
         "TipoJornada", related_name="jornada", blank=True, null=True, on_delete=SET_NULL
     )
@@ -168,7 +168,9 @@ class Cargo(Model):
 class Sucursal(Model):
     empresa = ForeignKey(Empresa, on_delete=CASCADE)
     nombre = CharField(verbose_name="Nombre de sucursal", max_length=100)
-    direccion = CharField(verbose_name="Direccion de sucursal", max_length=200)
+    direccion = CharField(
+        verbose_name="Direccion de sucursal", max_length=200, blank=True, null=True
+    )
 
 
 class Turno(Model):

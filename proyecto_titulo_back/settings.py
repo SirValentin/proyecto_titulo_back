@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-1c#_+pof=e3w3t3o)k57*i)3$7c$+84)j32j(=86vmp4h9^9c+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["proyectotituloback-production.up.railway.app"]
+ALLOWED_HOSTS = ["proyectotituloback-production.up.railway.app", "127.0.0.1"]
 
 USER_CREATE_PASSWORD_RETYPE = False
 
@@ -58,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "planificador.middleware.EmpresaMiddleware",
 ]
 
 REST_FRAMEWORK = {
@@ -92,12 +93,12 @@ WSGI_APPLICATION = "proyecto_titulo_back.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "railway",
-        "USER": "postgres",
-        "PASSWORD": "yDYjenrehpGgwoFeISHRUZjUGlQjxHcd",
-        "HOST": "roundhouse.proxy.rlwy.net",
-        "PORT": "42571",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": config("DB_NAME", default="planificador"),
+        "USER": config("DB_USER", default=""),
+        "PASSWORD": config("DB_PASS", default=""),
+        "HOST": config("DB_HOST", default="localhost"),
+        "PORT": config("DB_PORT", default=""),
     }
 }
 
@@ -143,32 +144,32 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# DJOSER = {
-# "PERMISSIONS": {
-#     "activation": ["rest_framework.permissions.AllowAny"],
-#     "password_reset": ["rest_framework.permissions.AllowAny"],
-#     "password_reset_confirm": ["rest_framework.permissions.AllowAny"],
-#     "set_password": ["djoser.permissions.CurrentUserOrAdmin"],
-#     "username_reset": ["rest_framework.permissions.AllowAny"],
-#     "username_reset_confirm": ["rest_framework.permissions.AllowAny"],
-#     "set_username": ["djoser.permissions.CurrentUserOrAdmin"],
-#     "user_create": ["database.permissions.CompanyAuthorizedOnly"],
-#     "user_delete": ["rest_framework.permissions.IsAdminUser"],
-#     "user": ["djoser.permissions.CurrentUserOrAdmin"],
-#     "user_list": ["djoser.permissions.CurrentUserOrAdmin"],
-#     "token_create": ["rest_framework.permissions.AllowAny"],
-#     "token_destroy": ["rest_framework.permissions.IsAuthenticated"],
-# },
-# "HIDE_USERS": True,
-# "PASSWORD_RESET_CONFIRM_URL": "password/reset/confirm/{uid}/{token}",
-# "USER_CREATE_PASSWORD_RETYPE": True,
-# "PASSWORD_RESET_CONFIRM_RETYPE": True,
-# "USERNAME_RESET_CONFIRM_URL": "#/email/reset/confirm/{uid}/{token}",
-# "ACTIVATION_URL": "user/activate/{uid}/{token}",
-# "SEND_ACTIVATION_EMAIL": True,
-# "SERIALIZERS": {
-# "current_user": "database.serializers.user.CurrentUserSerializer",
-# "user_create_password_retype": "database.serializers.employee.SignUpUserSerializer",
-# },
-# "EMAIL": {"password_reset": "database.email.PasswordResetEmail", "activation": "database.email.ActivationEmail"},
-# }
+DJOSER = {
+    # "PERMISSIONS": {
+    #     "activation": ["rest_framework.permissions.AllowAny"],
+    #     "password_reset": ["rest_framework.permissions.AllowAny"],
+    #     "password_reset_confirm": ["rest_framework.permissions.AllowAny"],
+    #     "set_password": ["djoser.permissions.CurrentUserOrAdmin"],
+    #     "username_reset": ["rest_framework.permissions.AllowAny"],
+    #     "username_reset_confirm": ["rest_framework.permissions.AllowAny"],
+    #     "set_username": ["djoser.permissions.CurrentUserOrAdmin"],
+    #     "user_create": ["database.permissions.CompanyAuthorizedOnly"],
+    #     "user_delete": ["rest_framework.permissions.IsAdminUser"],
+    #     "user": ["djoser.permissions.CurrentUserOrAdmin"],
+    #     "user_list": ["djoser.permissions.CurrentUserOrAdmin"],
+    #     "token_create": ["rest_framework.permissions.AllowAny"],
+    #     "token_destroy": ["rest_framework.permissions.IsAuthenticated"],
+    # },
+    # "HIDE_USERS": True,
+    # "PASSWORD_RESET_CONFIRM_URL": "password/reset/confirm/{uid}/{token}",
+    # "USER_CREATE_PASSWORD_RETYPE": True,
+    # "PASSWORD_RESET_CONFIRM_RETYPE": True,
+    # "USERNAME_RESET_CONFIRM_URL": "#/email/reset/confirm/{uid}/{token}",
+    # "ACTIVATION_URL": "user/activate/{uid}/{token}",
+    # "SEND_ACTIVATION_EMAIL": True,
+    "SERIALIZERS": {
+        "current_user": "planificador.serializers.user.UserSerializer",
+        # "user_create_password_retype": "database.serializers.employee.SignUpUserSerializer",
+    },
+    # "EMAIL": {"password_reset": "database.email.PasswordResetEmail", "activation": "database.email.ActivationEmail"},
+}

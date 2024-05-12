@@ -2,11 +2,11 @@ from rest_framework.serializers import (
     ModelSerializer,
 )
 
-from planificador.models import Empresa
+from planificador.models import Empleado
 
 
-class EmpresaSerializer(ModelSerializer):
+class EmpleadoSerializer(ModelSerializer):
 
     class Meta:
-        model = Empresa
+        model = Empleado
         fields = "__all__"
