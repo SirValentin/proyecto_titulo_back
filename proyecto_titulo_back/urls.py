@@ -11,4 +11,5 @@ urlpatterns = [
     path("api/v1/contrato/", include("planificador.paths.contrato_urls")),
     path("api/v1/empleado/", include("planificador.paths.empleado_urls")),
     path("api/v1/turno/", include("planificador.paths.turno_urls")),
+    path("api/v1/solicitud/", include("planificador.paths.solicitud_urls")),
 ]

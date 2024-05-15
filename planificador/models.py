@@ -204,11 +204,17 @@ class Solicitud(Model):
         null=False,
         blank=False,
     )
-    fecha = DateField()
+    fecha = DateField(
+        null=True,
+        blank=True,
+    )
     estado = SmallIntegerField(
         choices=[(tag.value, tag.value) for tag in EstadoSolicitud],
         default=EstadoSolicitud.EnRevision.value,
         null=False,
         blank=False,
     )
-    comentario = TextField()
+    comentario = TextField(
+        null=True,
+        blank=True,
+    )

@@ -5,10 +5,12 @@ from rest_framework import status
 from planificador.serializers.turno import TurnoSerializer
 from planificador.models import Admin, Empleado, Cargo, Sucursal, Turno
 from planificador.global_funtions import getEmpresa
+from planificador.serializers.solicitud import SolicitudSerializer
 
 
 class TurnoView(ModelViewSet):
     serializer_class = TurnoSerializer
+    serializer_class_solicitud = SolicitudSerializer
 
     def create(self, request):
         if request.user.is_authenticated:
@@ -47,16 +49,22 @@ class TurnoView(ModelViewSet):
             )
 
     def lista_turnos(self, request):
-        # empresa = getEmpresa(request)
-        # sucursales = Sucursal.objects.filter(empresa=empresa).values("id")
         empleados_ids = request.data.get("empleados")
-
         fecha_inicio = request.data.get("fecha_inicio")
         fecha_final = request.data.get("fecha_final")
-        # lista_empleados = Empleado.objects.filter(sucursal__in=sucursales)
-        turnos = Turno.objects.filter(
-            empleado__in=empleados_ids, fecha__range=[fecha_inicio, fecha_final]
-        )
+        solo_asignado = request.data.get("solo_asignado")
+
+        if solo_asignado:
+            turnos = Turno.objects.filter(
+                empleado__in=empleados_ids,
+                fecha__range=[fecha_inicio, fecha_final],
+                estado=2,
+            )
+        else:
+            turnos = Turno.objects.filter(
+                empleado__in=empleados_ids, fecha__range=[fecha_inicio, fecha_final]
+            )
+
         serializer = TurnoSerializer(turnos, many=True)
         return Response(serializer.data)
 
